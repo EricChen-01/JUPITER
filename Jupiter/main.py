@@ -21,7 +21,7 @@ client = commands.Bot(case_insensitive=True, command_prefix='.j ', intents=inten
 async def on_ready():
     await client.change_presence(status=discord.Status.idle)
 
-##############################Code starts here############################
+##############################Code starts here##############################
 
 #Completion API code. AKA the main thing we will be working on
 
