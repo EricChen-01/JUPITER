@@ -34,7 +34,8 @@ async def on_ready():
 @client.command()
 async def test(ctx, *, line):
 
-    completion = openai.Completion.create(engine="ada", prompt=line, n=6)
-    await ctx.send(completion.choices[0].text)
     
+    completion = openai.Completion.create(engine="ada", prompt=line)
+    await ctx.send(completion.choices[0].text)
+
 client.run(token)
