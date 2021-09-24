@@ -33,7 +33,11 @@ async def on_ready():
 #ctx.send <-- sends to discord chat
 @client.command()
 async def test(ctx, *, line):
-    completion = openai.Completion.create(engine="ada", prompt=line)
-    await ctx.send(line + completion.choices[0].text)
+
+    for x in range(6):
+        completion = openai.Completion.create(engine="ada", prompt=line)
+        line += completion.choices[0].text
+
+    await ctx.send(line)
 
 client.run(token)
