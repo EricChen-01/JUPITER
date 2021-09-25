@@ -56,8 +56,23 @@ async def starter(ctx, *, line):
 async def starter2(ctx, *, line):
     completion = deepai_complete(line)
     await ctx.send(completion.json()['output'])
+
 @client.command()
 async def ai(ctx, context):
     response = ai_bot.request(context)
     await ctx.send(response)
+
+@client.command()
+async def outline(ctx, *, topic):
+    prompt = f'Create an outline for an essay about {topic}:\n\nI: Introduction'
+    response = openai.Completion.create(
+        engine="ada",
+        prompt=prompt,
+        temperature=0.7,
+        max_tokens=60,
+        top_p=1.0,
+        frequency_penalty=0.0,
+        presence_penalty=0.0)
+    await ctx.send('I: Introduction' + response.choices[0].text)
+
 client.run(token)
