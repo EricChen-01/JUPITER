@@ -44,6 +44,6 @@ async def on_ready():
 async def test(ctx, *, line):
 
     completion = deepai_complete(line)
-    await ctx.send(completion.choices[0].text)
+    await ctx.send(completion.json()['output'])
 
 client.run(token)
