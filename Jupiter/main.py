@@ -2,19 +2,28 @@ import discord
 from discord.ext import commands
 import os
 from dotenv import load_dotenv
-import openai
+import requests
+
 load_dotenv()
 
 #API tokens
-openai.api_key = os.getenv('OPENAI_API_KEY')
+deepai_key = os.getenv("DEEPAI_API_KEY")
 token = os.getenv('TOK')
 
 #Inits
 intents = discord.Intents.all()
-engines = openai.Engine.list()
-
 
 client = commands.Bot(case_insensitive=True, command_prefix='.j ', intents=intents)
+
+def deepai_complete(prompt: str):
+    r = requests.post(
+        "https://api.deepai.org/api/text-generator",
+        data={
+            'text': prompt,
+        },
+        headers={'api-key': deepai_key}
+    )
+    return r
 
 #Bot is ready
 @client.event
@@ -34,8 +43,7 @@ async def on_ready():
 @client.command()
 async def test(ctx, *, line):
 
-    
-    completion = openai.Completion.create(engine="ada", prompt=line)
-    await ctx.send(completion.choices[0].text)
+    completion = deepai_complete(line)
+    await ctx.send(completion.json()['output'])
 
 client.run(token)
