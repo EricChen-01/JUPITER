@@ -15,6 +15,9 @@ token = os.getenv('TOK')
 #Inits
 intents = discord.Intents.all()
 engines = openai.Engine.list()
+ai_bot = GenericAssistant('intents.json')
+ai_bot.train_model()
+ai_bot.save_model()
 
 client = commands.Bot(case_insensitive=True, command_prefix='.j ', intents=intents)
 
@@ -53,5 +56,8 @@ async def starter(ctx, *, line):
 async def starter2(ctx, *, line):
     completion = deepai_complete(line)
     await ctx.send(completion.json()['output'])
-
+@client.command()
+async def ai(ctx, context):
+    response = ai_bot.request(context)
+    await ctx.send(response)
 client.run(token)
