@@ -1,9 +1,11 @@
 import discord
 from discord.ext import commands
-import os
 from dotenv import load_dotenv
+from neuralintents import GenericAssistant
 import openai
 import requests
+import os
+
 
 load_dotenv()
 
