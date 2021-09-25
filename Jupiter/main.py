@@ -8,24 +8,24 @@ import requests
 load_dotenv()
 
 #API tokens
-openai.api_key = os.getenv('OPENAI_API_KEY')
+# openai.api_key = os.getenv('OPENAI_API_KEY')
 deepai_key = os.getenv("DEEPAI_API_KEY")
 token = os.getenv('TOK')
 
 #Inits
 intents = discord.Intents.all()
-engines = openai.Engine.list()
+# engines = openai.Engine.list()
 
 client = commands.Bot(case_insensitive=True, command_prefix='.j ', intents=intents)
 
 #DeepAI helper functions
-def deepai_complete(self, prompt: str):
+def deepai_complete(prompt: str):
     r = requests.post(
         "https://api.deepai.org/api/text-generator",
         data={
             'text': prompt,
         },
-        headers={'api-key': self.deepai_key}
+        headers={'api-key': deepai_key}
     )
     return r
 
